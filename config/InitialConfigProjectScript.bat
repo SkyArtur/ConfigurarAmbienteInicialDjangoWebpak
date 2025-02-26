@@ -44,14 +44,14 @@ move node_modules\bootstrap\dist %APP%\static\bootstrap
 move node_modules\bootstrap-icons\font %APP%\static\bootstrap\icons
 move node_modules\jquery\dist %APP%\static\jquery
 :: Copia os arquivos para a raiz do projeto.
-IF exist config\files\.env copy config\files\.env .\.env
-IF exist config\files\webpack.config.js copy config\files\webpack.config.js .\webpack.config.js
-IF exist config\files\docker-compose.yaml copy config\files\docker-compose.yaml .\docker-compose.yaml
+if exist config\files\.env copy config\files\.env .\.env
+if exist config\files\webpack.config.js copy config\files\webpack.config.js .\webpack.config.js
+if exist config\files\docker-compose.yaml copy config\files\docker-compose.yaml .\docker-compose.yaml
 :: Verifica se o Docker está rodando.
 call docker info >null 2>&1
-IF %ERRORLEVEL% NEQ 0 (
+if %ERRORLEVEL% NEQ 0 (
     echo Docker não está instalado, não está no PATH ou não está rodando. Inicie o Docker.
-) ELSE (
+) else (
     :: inicia a configuração do container do banco de dados da aplicação.
     call docker-compose up -d
 )

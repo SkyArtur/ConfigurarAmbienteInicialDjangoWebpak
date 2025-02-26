@@ -53,27 +53,29 @@ if exist config\files\.env copy config\files\.env .\.env
 if exist config\files\webpack.config.js copy config\files\webpack.config.js .\webpack.config.js
 if exist config\files\docker-compose.yaml copy config\files\docker-compose.yaml .\docker-compose.yaml
 
-GOTO APLICACAO
+:: Caso não deseje criar a aplicação automaticamente, remova o comentário( @REM ) de GOTO APLICACAO e :APLICACAO
+@REM GOTO APLICACAO
 
-:: Este bloco de código é ignorado pela execução do script
-:: Caso deseje criar a aplicação automaticamente, remova GOTO APLICACAO e :APLICACAO
 :: Inicia o projeto Django.
 call django-admin startproject setup .
 
 :: Cria o app.
 call python .\manage.py startapp %APP%
 
+:: Cria os diretórios para os arquivos estáticos da aplicação.
+mkdir %APP%\static\css  %APP%\static\js
+
 :: Move os módulos necessários para a pasta 'static' do projeto.
 move node_modules\bootstrap\dist %APP%\static\bootstrap
 move node_modules\bootstrap-icons\font %APP%\static\bootstrap\icons
 move node_modules\jquery\dist %APP%\static\jquery
 
-:APLICACAO
+@REM :APLICACAO
 
 GOTO DOCKERCOMPOSE
 
 :: Este bloco de código é ignorado pela execução do script
-:: Caso deseje configurar o container para o banco de dados da aplicação, remova GOTO DOCKERCOMPOSE e :DOCKERCOMPOSE
+:: Caso deseje configurar o container para o banco de dados da aplicação, remova ou comente (@REM) GOTO DOCKERCOMPOSE e :DOCKERCOMPOSE
 :: Verifica se o Docker está rodando.
 call docker info >null 2>&1
 if %ERRORLEVEL% NEQ 0 (

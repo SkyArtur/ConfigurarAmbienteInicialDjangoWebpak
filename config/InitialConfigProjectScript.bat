@@ -33,12 +33,7 @@ call django-admin startproject setup .
 :: Cria o app.
 call python .\manage.py startapp %APP%
 :: Cria as pastas iniciais do projeto e para o desenvolvimento.
-mkdir templates\pages
-mkdir templates\includes
-mkdir src\js
-mkdir src\sass
-mkdir %APP%\static\css
-mkdir %APP%\static\js
+mkdir templates\pages templates\includes src\js src\sass  %APP%\static\css  %APP%\static\js
 :: Cria os arquivos iniciais para desenvolvimento frontend.
 echo.>src\js\index.js
 echo.>src\sass\main.sass
@@ -48,9 +43,10 @@ echo.>templates\index.html
 move node_modules\bootstrap\dist %APP%\static\bootstrap
 move node_modules\bootstrap-icons\font %APP%\static\bootstrap\icons
 move node_modules\jquery\dist %APP%\static\jquery
-copy config\files\.env .\.env
-copy config\files\webpack.config.js .\webpack.config.js
-copy config\files\docker-compose.yaml .\docker-compose.yaml
+:: Copia os arquivos para a raiz do projeto.
+IF exist config\files\.env copy config\files\.env .\.env
+IF exist config\files\webpack.config.js copy config\files\webpack.config.js .\webpack.config.js
+IF exist config\files\docker-compose.yaml copy config\files\docker-compose.yaml .\docker-compose.yaml
 :: Verifica se o Docker está rodando.
 call docker info >null 2>&1
 IF %ERRORLEVEL% NEQ 0 (

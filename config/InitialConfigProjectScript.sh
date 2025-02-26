@@ -18,7 +18,7 @@ source .venv/bin/activate
 
 # Atualiza o pip e instala as bibliotecas necessárias
 pip install --upgrade pip
-pip install django pillow python-dotenv passlib psycopg2 psycopg2-binary
+pip install django pillow python-dotenv passlib psycopg2-binary
 
 # Inicializa o Node.js e instala pacotes
 npm init -y

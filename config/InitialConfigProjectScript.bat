@@ -48,26 +48,30 @@ echo.>src\sass\main.sass
 echo.>.gitignore
 echo.>templates\index.html
 
-:: Move os módulos necessários para a pasta 'static' do projeto.
-move node_modules\bootstrap\dist %APP%\static\bootstrap
-move node_modules\bootstrap-icons\font %APP%\static\bootstrap\icons
-move node_modules\jquery\dist %APP%\static\jquery
-
 :: Copia os arquivos para a raiz do projeto.
 if exist config\files\.env copy config\files\.env .\.env
 if exist config\files\webpack.config.js copy config\files\webpack.config.js .\webpack.config.js
 if exist config\files\docker-compose.yaml copy config\files\docker-compose.yaml .\docker-compose.yaml
 
 GOTO APLICACAO
+
 :: Este bloco de código é ignorado pela execução do script
 :: Caso deseje criar a aplicação automaticamente, remova GOTO APLICACAO e :APLICACAO
 :: Inicia o projeto Django.
 call django-admin startproject setup .
+
 :: Cria o app.
 call python .\manage.py startapp %APP%
+
+:: Move os módulos necessários para a pasta 'static' do projeto.
+move node_modules\bootstrap\dist %APP%\static\bootstrap
+move node_modules\bootstrap-icons\font %APP%\static\bootstrap\icons
+move node_modules\jquery\dist %APP%\static\jquery
+
 :APLICACAO
 
 GOTO DOCKERCOMPOSE
+
 :: Este bloco de código é ignorado pela execução do script
 :: Caso deseje configurar o container para o banco de dados da aplicação, remova GOTO DOCKERCOMPOSE e :DOCKERCOMPOSE
 :: Verifica se o Docker está rodando.
@@ -78,6 +82,7 @@ if %ERRORLEVEL% NEQ 0 (
     :: inicia a configuração do container do banco de dados da aplicação.
     call docker-compose up -d
 )
+
 :DOCKERCOMPOSE
 
 echo "Ambiente configurado."

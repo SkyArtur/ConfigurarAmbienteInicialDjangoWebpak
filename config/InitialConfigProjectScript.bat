@@ -40,7 +40,7 @@ call npm i  --save-dev webpack webpack-cli babel-loader @babel/core @babel/prese
     css-minimizer-webpack-plugin terser-webpack-plugin bootstrap bootstrap-icons jquery dotenv
 
 :: Cria as pastas iniciais do projeto e para o desenvolvimento.
-mkdir templates\pages templates\includes src\js src\sass  %APP%\static\css  %APP%\static\js
+mkdir templates\pages templates\includes src\js src\sass
 
 :: Cria os arquivos iniciais para desenvolvimento frontend.
 echo.>src\js\index.js

@@ -53,6 +53,7 @@ if exist config\files\.env copy config\files\.env .\.env
 if exist config\files\webpack.config.js copy config\files\webpack.config.js .\webpack.config.js
 if exist config\files\docker-compose.yaml copy config\files\docker-compose.yaml .\docker-compose.yaml
 
+
 :: Caso não deseje criar a aplicação automaticamente, remova o comentário( @REM ) de GOTO APLICACAO e :APLICACAO
 @REM GOTO APLICACAO
 
@@ -72,10 +73,12 @@ move node_modules\jquery\dist %APP%\static\jquery
 
 @REM :APLICACAO
 
+
+:: Este bloco de código é ignorado pela execução do script.
+:: Caso deseje configurar o container para o banco de dados da aplicação,
+:: remova ou comente (@REM) GOTO DOCKERCOMPOSE e :DOCKERCOMPOSE
 GOTO DOCKERCOMPOSE
 
-:: Este bloco de código é ignorado pela execução do script
-:: Caso deseje configurar o container para o banco de dados da aplicação, remova ou comente (@REM) GOTO DOCKERCOMPOSE e :DOCKERCOMPOSE
 :: Verifica se o Docker está rodando.
 call docker info >null 2>&1
 if %ERRORLEVEL% NEQ 0 (

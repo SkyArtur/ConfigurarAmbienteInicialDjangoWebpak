@@ -1,4 +1,4 @@
-# Automatização da inicialização do ambiente de desenvolvimento Django e Webpack.
+# Configurando ambiente de desenvolvimento Django e Webpack.
 
 ### Instalações necessárias
 - [Python](https://www.python.org/downloads/)

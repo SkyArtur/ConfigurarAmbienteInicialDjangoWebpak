@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Em Testes
+
 # Desativa a exibição dos comandos no console para uma aparência mais limpa
 set -e
 

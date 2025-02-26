@@ -28,7 +28,7 @@ call .\.venv\Scripts\activate.bat
 :: Atualiza o pip.
 call python -m pip install --upgrade pip
 
-:: instalar as bibliotecas python necessárias.
+:: instalar as bibliotecas python necessárias e criando o arquivo requiriments
 call pip install django pillow python-dotenv passlib psycopg2 psycopg2-binary
 call pip freeze > requirements
 
@@ -53,7 +53,7 @@ echo.>templates\index.html
 if exist config\files\.env copy config\files\.env .\.env
 if exist config\files\webpack.config.js copy config\files\webpack.config.js .\webpack.config.js
 if exist config\files\docker-compose.yaml copy config\files\docker-compose.yaml .\docker-compose.yaml
-
+if exist config\.gitignore copy config\.gitignore .\.gitignore
 
 :: Caso não deseje criar a aplicação automaticamente, remova o comentário( @REM ) de GOTO APLICACAO e :APLICACAO
 @REM GOTO APLICACAO
@@ -74,22 +74,23 @@ move node_modules\jquery\dist %APP%\static\jquery
 
 @REM :APLICACAO
 
-
 :: Este bloco de código é ignorado pela execução do script.
 :: Caso deseje configurar o container para o banco de dados da aplicação,
 :: remova ou comente (@REM) GOTO DOCKERCOMPOSE e :DOCKERCOMPOSE
-GOTO DOCKERCOMPOSE
+@REM GOTO DOCKERCOMPOSE
 
 :: Verifica se o Docker está rodando.
 call docker info >null 2>&1
 if %ERRORLEVEL% NEQ 0 (
-    echo Docker não está instalado, não está no PATH ou não está rodando. Inicie o Docker.
+    echo Verifique se o Docker está instalado no sistema ou se está rodando.
 ) else (
     :: inicia a configuração do container do banco de dados da aplicação.
-    call docker-compose up -d
+    call docker compose up -d
+    :: Exclui o arquivo null criado pela condicional de verificação do docker.
+    if exist "./null" del /F /Q "./null"
 )
 
-:DOCKERCOMPOSE
+@REM :DOCKERCOMPOSE
 
 echo "Ambiente configurado."
 pause

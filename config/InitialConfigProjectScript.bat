@@ -30,6 +30,7 @@ call python -m pip install --upgrade pip
 
 :: instalar as bibliotecas python necessárias.
 call pip install django pillow python-dotenv passlib psycopg2 psycopg2-binary
+call pip freeze > requirements
 
 :: Inicia o NodeJS.
 call npm init -y
